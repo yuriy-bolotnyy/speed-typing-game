@@ -3,7 +3,7 @@ import './index.css'
 import useWordGame from './hooks/useWordGame'
 
 function App() {
-  const {inputRef, text, handleTextChange, gameRunning, timeRemaining, handleClick, count} = useWordGame(10)
+  const {inputRef, text, handleTextChange, gameRunning, timeRemaining, handleClick, count} = useWordGame(20)
 
   return (
     <div className="App">
