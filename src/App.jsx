@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './index.css'
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
   const [text, setText] = useState("")
   const [timeRemaining, setTimeRemaining] = useState(startTime)
   const [gameRunning, setGameRunning] = useState(false)
+  const inputRef = useRef(null)
 
   const handleTextChange = (event) => {
     // console.log("Text changed")
@@ -22,9 +23,9 @@ function App() {
 
   const startGame = () => {
     console.log("Starting Game ...")
-    console.log(`is game running: ${gameRunning}`)
+    // console.log(`is game running: ${gameRunning}`)
     setGameRunning(prevState => !prevState)
-    console.log(`is game running: ${gameRunning}`)
+    gameRunning &&  console.log("Game started")
   }
 
   useEffect(() => {
@@ -48,6 +49,10 @@ function App() {
       setTimeRemaining(startTime)
       setText("")
       setGameRunning(true) 
+      gameRunning && console.log("Game started")
+      console.log("Setting focus to ", inputRef.current)
+      inputRef.current.disabled = false
+      inputRef.current.focus()
     }
 
   } 
@@ -55,7 +60,10 @@ function App() {
   return (
     <div className="App">
         <h1>How fast do you type?</h1>
-        <textarea value={text} name="" id="" cols="15" rows="1" onChange={handleTextChange} disabled={!gameRunning}/>
+        <textarea ref={inputRef} value={text} name="" id="" cols="15" rows="1" 
+            onChange={handleTextChange} 
+            disabled={!gameRunning}
+        />
         <h4>Time remaining: {timeRemaining}</h4>
         <button onClick={handleClick} disabled={gameRunning}>Start Game</button>
         <h1>Word count: {count}</h1>
