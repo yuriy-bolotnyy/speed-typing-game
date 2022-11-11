@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import './index.css'
 
 function App() {
+  const startTime = 10
   const [count, setCount] = useState(0)
   const [text, setText] = useState("")
-  const [timeRemaining, setTimeRemaining] = useState(10)
+  const [timeRemaining, setTimeRemaining] = useState(startTime)
   const [gameRunning, setGameRunning] = useState(false)
 
   const handleTextChange = (event) => {
@@ -42,12 +43,21 @@ function App() {
     // console.log("effect called")
   }, [gameRunning])
 
+  const handleClick = () => {
+    if (!gameRunning) { 
+      setTimeRemaining(startTime)
+      setText("")
+      setGameRunning(true) 
+    }
+
+  } 
+
   return (
     <div className="App">
         <h1>How fast do you type?</h1>
-        <textarea value={text} name="" id="" cols="15" rows="1" onChange={handleTextChange}/>
+        <textarea value={text} name="" id="" cols="15" rows="1" onChange={handleTextChange} disabled={!gameRunning}/>
         <h4>Time remaining: {timeRemaining}</h4>
-        <button onClick={() => setGameRunning(true)}>Start Game</button>
+        <button onClick={handleClick} disabled={gameRunning}>Start Game</button>
         <h1>Word count: {count}</h1>
     </div>
   )
